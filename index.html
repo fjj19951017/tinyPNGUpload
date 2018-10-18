@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+<title></title>
+</head>
+<body>
+<div>
+	<input type="file"/ id="file" multiple="multiple">
+</div>
+<script type="text/javascript">
+	//创建异步对象  
+	var xhr = new XMLHttpRequest();
+	var file = document.getElementById('file');
+	var formData = new FormData();
+	
+	xhr.open('post', 'api.tinify.com/shrink');
+	
+	//设置请求的类型及url
+	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	xhr.setRequestHeader("Authorization", "Basic HEE0g77LCbP2zzcyv3jNek7jDirsPXa4");
+	
+	xhr.onreadystatechange = function () {
+    // 这步为判断服务器是否正确响应
+	if (xhr.readyState == 4 && xhr.status == 200) {
+		console.log(xhr.responseText);
+		} 
+	};
+	
+	file.onchange = function() {
+		
+		var files = this.files;
+		
+		for(var i = 0; i < files.length; i++) {
+		
+			formData.append('file' + i, files[i]);
+		}
+		console.log(formData)
+		//发送请求
+		xhr.send(formData);
+	}
+</script>
+</body>
+</html>
